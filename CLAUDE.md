@@ -1,7 +1,7 @@
 # CLAUDE.md — exp-methods-review
 
 ## Repo 用途
-hai 的「心理學實驗法」每週複習 PWA（手機為主）。骨架仿 `german-review`：單頁 `index.html` ＋ runtime fetch JSON，無 build、無框架。目前只在本機，尚未建 GitHub repo、未推送。
+hai 的「心理學實驗法」每週複習 PWA（手機為主）。骨架仿 `german-review`：單頁 `index.html` ＋ runtime fetch JSON，無 build、無框架。已部署：公開 repo `github.com/Tuanzilee/exp-methods-review`，Pages `tuanzilee.github.io/exp-methods-review`（main 分支根目錄，push 後 1–2 分鐘更新）。`samples/` 試聽檔不進 repo（.gitignore）。
 
 ## 檔案結構
 ```
@@ -27,11 +27,10 @@ check.py       ← 資料檢查（含音檔齊全）：python3 check.py
 3. 以「一張卡一個概念」追加 concepts.json；情境題用課堂案例改寫；更新 weeks.json
 4. **用自己的話改寫，不要貼講義或課本原文**（日後若公開 repo，需先檢查）
 5. 跑 `~/.venvs/tts/bin/python tools/gen_audio.py` 補音檔，再跑 `python3 check.py`；bump `sw.js` 的 `CACHE` 版本號
-6. 本機預覽驗證後，commit；**push 前一律先問 hai**
+6. 本機預覽驗證後 commit；**push 前一律先問 hai**（公開 repo，內容不放講義或課本原文）
 
 ## 待做
 - 期中考範圍＝到 Ch7（hai 確認）。`SCOPES` 的「期中範圍」目前以 `week <= 7` 近似，等老師公布章節與週次對應後改成精確章節；`tags` 的「期中」已不再使用
-- 建 GitHub repo 與 Pages（需 hai 同意）
 
 ## 查證紀錄（2026-10-07，Consensus）
 - 運動與死亡風險：對應 Gorzelitz 等人 2022（BJSM，PLCO，99,713 人）；32%／41%／9% 吻合，41% 是達有氧建議量＋每週重訓 1–2 次
