@@ -21,6 +21,9 @@ check.py       ← 資料檢查（含音檔齊全）：python3 check.py
 - `quiz.json`：`id`（E_W{週}_Q{兩位數}）、`week`、`q`、`options`（4 個）、`answer`（options 的索引）、`why`、`concept`（對應概念卡 id；答錯會把該概念加入錯題本）
 - `weeks.json`：`week`、`date`、`title`、`summary`、`points[]`、`todo[]`、`concepts[]`。W3 放假沒上課，保留一筆說明
 
+## 介面風格（2026-10-07，hai 參考一款學習 App 的截圖）
+暖米色底、深棕字、大圓角（20px）加淡邊框、無陰影；首頁只留一個主行動（今天要複習的卡數＋開始複習）；底部浮動膠囊導覽列＋線條圖示（不用彩色 emoji）；主按鈕有立體底邊。只借設計手法，不複製對方的圖示或文案。連勝／XP 暫不做。德文複習尚未套用。
+
 ## 每週新增內容（hai 說「更新實驗法 W{n}」）
 1. 讀 `~/Desktop/P. 進行中專案/FJU psy/02_修課/1151/1151_心理學實驗法/` 當週的 `*_W{nn}_Plaud逐字稿.md`（Plaud 摘要區已分好知識點）與講義 PDF
 2. **Plaud 轉錄未經核聽**：專有名詞、數字以課本（Morling）與講義校正；不確定處列給 hai 確認
