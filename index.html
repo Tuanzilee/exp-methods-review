@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>實驗法複習</title>
+<meta name="description" content="心理學實驗法：每週重點、概念卡、情境題">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="實驗法複習">
+<meta name="theme-color" content="#1f2a44">
+<style>
+:root {
+  --bg: #f6f4ef; --card: #ffffff; --ink: #1d2230; --muted: #6b7080; --line: #e3e0d8;
+  --accent: #1f2a44; --accent-ink: #ffffff; --gold: #c9a227;
+  --bad: #d64545; --mid: #d69a2e; --good: #2e9e6a;
+  --radius: 16px; --shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151d; --card: #1c212c; --ink: #eceef3; --muted: #9aa0ae; --line: #2c3240;
+    --accent: #e4c45a; --accent-ink: #1a1a1a; --gold: #e4c45a; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151d; --card: #1c212c; --ink: #eceef3; --muted: #9aa0ae; --line: #2c3240;
+  --accent: #e4c45a; --accent-ink: #1a1a1a; --gold: #e4c45a; --shadow: none;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif;
+  padding: env(safe-area-inset-top) 16px calc(88px + env(safe-area-inset-bottom));
+  max-width: 560px; margin: 0 auto; min-height: 100vh;
+}
+header { display: flex; align-items: center; justify-content: space-between; padding: 14px 0 8px; }
+header h1 { font-size: 20px; margin: 0; }
+header .sub { color: var(--muted); font-size: 13px; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--line); padding: 16px; margin: 12px 0; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 14px; }
+.chip.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn { display: block; width: 100%; padding: 14px; border-radius: 12px; background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 16px; text-align: center; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+.stat { text-align: center; }
+.stat b { display: block; font-size: 26px; }
+.stat span { color: var(--muted); font-size: 12px; }
+.muted { color: var(--muted); font-size: 14px; }
+h2 { font-size: 17px; margin: 18px 0 6px; }
+nav.tabs { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
+nav.tabs .inner { display: flex; width: 100%; max-width: 560px; }
+nav.tabs button { flex: 1; padding: 10px 0 12px; font-size: 12px; color: var(--muted); }
+nav.tabs button .ic { display: block; font-size: 20px; line-height: 1.2; }
+nav.tabs button.on { color: var(--ink); font-weight: 600; }
+.flash { min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 8px; user-select: none; }
+.flash .term { font-size: 28px; font-weight: 700; line-height: 1.3; }
+.flash .en { color: var(--muted); font-size: 15px; }
+.flash .def { font-size: 17px; text-align: left; width: 100%; }
+.flash .hint { color: var(--muted); font-size: 13px; }
+.tag { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; }
+.example { font-size: 15px; margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 10px; width: 100%; text-align: left; }
+.rate .btn { font-size: 15px; padding: 12px 4px; }
+.rate .bad { background: var(--bad); color: #fff; } .rate .mid { background: var(--mid); color: #fff; } .rate .good { background: var(--good); color: #fff; }
+.spk { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); font-size: 18px; flex: none; }
+.progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 6px 0 2px; }
+.progress div { height: 100%; background: var(--gold); transition: width .3s; }
+.opt { display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--line); background: var(--card); font-size: 16px; }
+.opt.right { border-color: var(--good); background: color-mix(in srgb, var(--good) 15%, var(--card)); }
+.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 15%, var(--card)); }
+.prompt { font-size: 18px; font-weight: 600; }
+.why { font-size: 14px; background: color-mix(in srgb, var(--gold) 14%, transparent); border-radius: 10px; padding: 8px 12px; margin-top: 10px; }
+.toast { position: fixed; left: 50%; top: 16px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 10px; font-size: 14px; z-index: 20; }
+.warn { border-left: 4px solid var(--mid); }
+ul.pts { margin: 6px 0 0; padding-left: 20px; }
+ul.pts li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>實驗法複習</h1><div class="sub">心理學實驗法 · 輔大心理系</div></div>
+  <button class="spk" id="themeBtn" aria-label="切換深淺色">◐</button>
+</header>
+<main id="app"></main>
+<nav class="tabs"><div class="inner">
+  <button data-tab="home"><span class="ic">🏠</span>首頁</button>
+  <button data-tab="weeks"><span class="ic">📝</span>每週重點</button>
+  <button data-tab="cards"><span class="ic">🃏</span>概念卡</button>
+  <button data-tab="quiz"><span class="ic">🧪</span>情境題</button>
+</div></nav>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const app = $('#app');
+const DAY = 864e5;
+const INTERVALS = [1, 2, 4, 7, 14];
+
+// ---------- 儲存 ----------
+function load(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} }
+let srs = load('em_srs', {});      // id -> {box, due, weak}
+let prefs = load('em_prefs', { scope: 'all' });
+const savePrefs = () => save('em_prefs', prefs);
+const saveSrs = () => save('em_srs', srs);
+
+let theme = load('em_theme', null);
+if (theme) document.documentElement.dataset.theme = theme;
+$('#themeBtn').onclick = () => {
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  const cur = document.documentElement.dataset.theme || (dark ? 'dark' : 'light');
+  theme = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = theme; save('em_theme', theme);
+};
+
+// ---------- 語音（先用裝置內建中文語音；之後可換成預錄音檔）----------
+let voice = null;
+function pickVoice() {
+  const vs = speechSynthesis.getVoices().filter(v => v.lang && /^zh[-_](tw|hant)/i.test(v.lang));
+  voice = vs.find(v => /Meijia|Mei-Jia|美嘉|Hsiao|曉/i.test(v.name)) || vs[0] || null;
+}
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+const player = new Audio();
+// 優先播放預錄音檔（雲哲男聲，tools/gen_audio.py 產生）；載入失敗才退回裝置內建語音
+function speak(text, file) {
+  stopSpeak();
+  if (file) {
+    player.onerror = () => { player.onerror = null; synth(text); };
+    player.src = `audio/${file}.mp3`;
+    player.play().catch(err => { if (err.name !== 'NotAllowedError') synth(text); });
+    return;
+  }
+  synth(text);
+}
+function synth(text) {
+  if (!('speechSynthesis' in window)) { toast('這個瀏覽器不支援語音'); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-TW'; u.rate = 0.95;
+  if (voice) u.voice = voice;
+  speechSynthesis.speak(u);
+}
+const stopSpeak = () => { player.onerror = null; player.pause(); if ('speechSynthesis' in window) speechSynthesis.cancel(); };
+
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 1800);
+}
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+// ---------- 資料與範圍 ----------
+let CONCEPTS = [], QUIZ = [], WEEKS = [];
+const SCOPES = [
+  { key: 'all', label: '全部', test: () => true },
+  { key: 'mid', label: '期中範圍（至 Ch7）', test: x => x.week <= 7 },
+  { key: 'w1', label: 'W1', test: x => x.week === 1 },
+  { key: 'w2', label: 'W2', test: x => x.week === 2 },
+  { key: 'w4', label: 'W4', test: x => x.week === 4 },
+];
+const inScope = list => list.filter((SCOPES.find(s => s.key === prefs.scope) || SCOPES[0]).test);
+const isDue = c => !srs[c.id] || srs[c.id].due <= Date.now();
+const isNew = c => !srs[c.id];
+function markWeak(id) { const s = srs[id] || { box: 1, due: Date.now() }; s.weak = true; srs[id] = s; saveSrs(); }
+
+// ---------- 路由 ----------
+let tab = 'home';
+function go(t, arg) {
+  stopSpeak(); tab = t;
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === (t === 'weak' ? 'cards' : t)));
+  ({ home: renderHome, weeks: renderWeeks, cards: () => startCards(false), weak: () => startCards(true), quiz: startQuiz })[t](arg);
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('nav.tabs button').forEach(b => b.onclick = () => go(b.dataset.tab));
+const scopeChips = () => `<div class="chips" id="scopeChips">${SCOPES.map(s =>
+  `<button class="chip ${prefs.scope === s.key ? 'on' : ''}" data-k="${s.key}">${s.label}</button>`).join('')}</div>`;
+const bindScope = onChange => document.querySelectorAll('#scopeChips .chip').forEach(c => c.onclick = () => { prefs.scope = c.dataset.k; savePrefs(); onChange(); });
+
+// ---------- 首頁 ----------
+function renderHome() {
+  const list = inScope(CONCEPTS);
+  const due = list.filter(c => !isNew(c) && isDue(c)).length;
+  const fresh = list.filter(isNew).length;
+  const learned = list.filter(c => srs[c.id] && srs[c.id].box >= 3).length;
+  const weak = CONCEPTS.filter(c => srs[c.id]?.weak).length;
+  app.innerHTML = `
+    <div class="card"><div class="muted" style="margin-bottom:8px">複習範圍</div>${scopeChips()}</div>
+    <div class="card row">
+      <div class="stat"><b>${due}</b><span>今天到期</span></div>
+      <div class="stat"><b>${fresh}</b><span>還沒學</span></div>
+      <div class="stat"><b>${learned}</b><span>已熟（3 盒以上）</span></div>
+    </div>
+    <button class="btn" id="goCards">開始概念卡（${Math.min(due + fresh, 20)} 張）</button>
+    <div class="row" style="margin-top:10px">
+      <button class="btn ghost" id="goQuiz">🧪 情境題 10 題</button>
+      <button class="btn ghost" id="goWeeks">📝 每週重點</button>
+    </div>
+    ${weak ? `<button class="btn ghost" id="goWeak" style="margin-top:10px">📕 錯題本（${weak}）</button>` : ''}
+    <div class="card warn"><div><b>內容來源</b></div>
+      <div class="muted">整理自課堂 Plaud 錄音摘要（未經人工核聽），並改寫成自己的話。專有名詞以課本與講義為準。</div></div>
+    <div class="muted" style="text-align:center;margin-top:16px">共 ${CONCEPTS.length} 張概念卡 · ${QUIZ.length} 題情境題</div>`;
+  bindScope(renderHome);
+  $('#goCards').onclick = () => go('cards');
+  $('#goQuiz').onclick = () => go('quiz');
+  $('#goWeeks').onclick = () => go('weeks');
+  if (weak) $('#goWeak').onclick = () => go('weak');
+}
+
+// ---------- 每週重點 ----------
+function renderWeeks() {
+  app.innerHTML = WEEKS.slice().reverse().map(w => `
+    <div class="card">
+      <div class="muted">W${w.week} · ${esc(w.date)}</div>
+      <h2 style="margin-top:2px">${esc(w.title)}</h2>
+      <p>${esc(w.summary)}</p>
+      ${w.points.length ? `<b>重點</b><ul class="pts">${w.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+      ${w.todo.length ? `<div style="margin-top:10px"><b>待辦</b><ul class="pts">${w.todo.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div>` : ''}
+      ${w.concepts.length ? `<button class="btn ghost" style="margin-top:12px" data-w="${w.week}">練這週的概念卡</button>` : ''}
+      ${w.points.length ? `<button class="spk" data-say="${w.week}" style="margin-top:10px" aria-label="朗讀">🔊</button>` : ''}
+    </div>`).join('');
+  document.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { prefs.scope = 'w' + b.dataset.w; savePrefs(); go('cards'); });
+  document.querySelectorAll('[data-say]').forEach(b => b.onclick = () => {
+    const w = WEEKS.find(x => x.week === +b.dataset.say);
+    speak(`第${w.week}週，${w.title}。${w.points.join('。')}`, 'W' + w.week);
+  });
+}
+
+// ---------- 概念卡 ----------
+let deck = [], idx = 0, flipped = false, weakMode = false;
+function startCards(weak) {
+  weakMode = weak;
+  if (weak) deck = shuffle(CONCEPTS.filter(c => srs[c.id]?.weak));
+  else {
+    const list = inScope(CONCEPTS);
+    deck = shuffle(list.filter(c => !isNew(c) && isDue(c))).concat(list.filter(isNew)).slice(0, 20);
+  }
+  idx = 0; flipped = false; renderCard();
+}
+function renderCard() {
+  if (!deck.length) {
+    app.innerHTML = `<div class="card" style="text-align:center"><p style="font-size:40px;margin:8px">🎉</p>
+      <p>${weakMode ? '錯題本是空的！' : '這個範圍今天沒有要複習的卡片了。'}</p>
+      ${weakMode ? '' : `<p class="muted">想多練可以換範圍：</p>${scopeChips()}`}
+      <button class="btn" style="margin-top:14px" onclick="go('quiz')">去做情境題</button></div>`;
+    if (!weakMode) bindScope(() => startCards(false));
+    return;
+  }
+  if (idx >= deck.length) {
+    app.innerHTML = `<div class="card" style="text-align:center"><p style="font-size:40px;margin:8px">✅</p>
+      <p>這一輪 ${deck.length} 張完成！</p>
+      <button class="btn" onclick="go('${weakMode ? 'weak' : 'cards'}')">再來一輪</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('home')">回首頁</button></div>`;
+    return;
+  }
+  const c = deck[idx];
+  const front = `<span class="tag">W${c.week} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div>
+    <div class="hint">先想想它的意思，點卡片翻面</div>`;
+  const back = `<span class="tag">W${c.week} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div><div class="en">${esc(c.en)}</div>
+    <div class="def">${esc(c.def)}</div><div class="example"><b>舉個例子：</b>${esc(c.example)}</div>`;
+  app.innerHTML = `
+    <div class="muted">${weakMode ? '📕 錯題本' : '🃏 概念卡'} · ${idx + 1} / ${deck.length}</div>
+    <div class="progress"><div style="width:${idx / deck.length * 100}%"></div></div>
+    <div class="card flash" id="flash">${flipped ? back : front}</div>
+    <div class="row" style="margin-bottom:10px"><button class="btn ghost" id="spkCard">🔊 朗讀</button></div>
+    ${flipped ? `<div class="row rate">
+      <button class="btn bad" data-r="0">忘了</button><button class="btn mid" data-r="1">模糊</button><button class="btn good" data-r="2">記得</button></div>`
+      : `<button class="btn" id="flipBtn">翻面</button>`}`;
+  const flip = () => { if (!flipped) { flipped = true; renderCard(); } };
+  $('#flash').onclick = e => { if (!e.target.closest('button')) flip(); };
+  $('#flipBtn') && ($('#flipBtn').onclick = flip);
+  $('#spkCard').onclick = () => flipped ? speak(`${c.term}。${c.def}。例如：${c.example}`, c.id) : speak(c.term);
+  document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => rate(c, +b.dataset.r));
+}
+function rate(c, r) {
+  const s = srs[c.id] || { box: 0, due: 0, weak: false };
+  if (r === 0) { s.box = 1; s.due = Date.now(); s.weak = true; deck.push(c); }
+  else if (r === 1) { s.box = Math.max(1, s.box); s.due = Date.now() + DAY; }
+  else { s.box = Math.min(5, s.box + 1); s.due = Date.now() + INTERVALS[s.box - 1] * DAY; if (weakMode) s.weak = false; }
+  srs[c.id] = s; saveSrs();
+  idx++; flipped = false; renderCard();
+}
+
+// ---------- 情境題 ----------
+let qz = [], qi = 0, qScore = 0;
+function startQuiz() {
+  const pool = inScope(QUIZ);
+  if (!pool.length) { app.innerHTML = `<div class="card">這個範圍沒有題目，換個範圍吧。<div style="margin-top:10px">${scopeChips()}</div></div>`; bindScope(startQuiz); return; }
+  // 錯題本裡的概念優先出
+  const w = shuffle(pool.filter(q => srs[q.concept]?.weak)).concat(shuffle(pool.filter(q => !srs[q.concept]?.weak)));
+  qz = w.slice(0, 10).map(q => {
+    const order = shuffle(q.options.map((text, i) => ({ text, ok: i === q.answer })));
+    return { q, order, pick: null };
+  });
+  qi = 0; qScore = 0; renderQuiz();
+}
+function renderQuiz() {
+  if (qi >= qz.length) {
+    app.innerHTML = `<div class="card" style="text-align:center"><p style="font-size:40px;margin:8px">🧪</p>
+      <p style="font-size:22px"><b>${qScore} / ${qz.length}</b></p><p class="muted">答錯的概念已加入錯題本</p>
+      <button class="btn" onclick="go('quiz')">再來一輪</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('home')">回首頁</button></div>`;
+    return;
+  }
+  const item = qz[qi], q = item.q, answered = item.pick !== null;
+  const c = CONCEPTS.find(x => x.id === q.concept);
+  app.innerHTML = `
+    <div class="muted">🧪 情境題 · ${qi + 1} / ${qz.length} · 答對 ${qScore}</div>
+    <div class="progress"><div style="width:${qi / qz.length * 100}%"></div></div>
+    <div class="card"><span class="tag">W${q.week}</span><div class="prompt" style="margin-top:8px">${esc(q.q)}</div></div>
+    ${item.order.map((o, i) => `<button class="opt ${answered ? (o.ok ? 'right' : (item.pick === i ? 'wrong' : '')) : ''}" data-o="${i}">${esc(o.text)}</button>`).join('')}
+    ${answered ? `<div class="why">💡 ${esc(q.why)}${c ? `<br><span class="muted">相關概念：${esc(c.term)}</span>` : ''}</div>
+      <div class="row" style="margin-top:10px"><button class="spk" id="say" style="flex:none" aria-label="朗讀">🔊</button><button class="btn" id="next">下一題</button></div>` : ''}`;
+  if (answered) {
+    $('#say').onclick = () => speak(q.why, q.id);
+    $('#next').onclick = () => { qi++; renderQuiz(); };
+    return;
+  }
+  document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => {
+    item.pick = +b.dataset.o;
+    if (item.order[item.pick].ok) qScore++; else markWeak(q.concept);
+    renderQuiz();
+  });
+}
+
+// ---------- 啟動 ----------
+Promise.all(['concepts.json', 'quiz.json', 'weeks.json'].map(f => fetch(f).then(r => r.json())))
+  .then(([c, q, w]) => { CONCEPTS = c; QUIZ = q; WEEKS = w; go('home'); })
+  .catch(e => { app.innerHTML = `<div class="card">資料載入失敗：${esc(e.message)}</div>`; });
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
