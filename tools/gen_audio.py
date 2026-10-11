@@ -1,14 +1,14 @@
 """產生預錄音檔（edge-tts，雲哲男聲）。只補新增或文字有改的。
 用法：~/.venvs/tts/bin/python tools/gen_audio.py
-音檔：audio/{概念卡id}.mp3、audio/{題目id}.mp3、audio/W{週}.mp3；audio/index.json 記錄文字雜湊"""
+音檔：audio/{概念卡id}.mp3、audio/{題目id}.mp3、audio/Ch{章}.mp3；audio/index.json 記錄文字雜湊"""
 import asyncio, hashlib, json, os
 import edge_tts
 VOICE, RATE = 'zh-TW-YunJheNeural', '-5%'
-concepts = json.load(open('concepts.json')); quiz = json.load(open('quiz.json')); weeks = json.load(open('weeks.json'))
+concepts = json.load(open('concepts.json')); quiz = json.load(open('quiz.json')); units = json.load(open('units.json'))
 items = {}
 for c in concepts: items[c['id']] = f"{c['term']}。{c['def']}。例如：{c['example']}"
 for q in quiz: items[q['id']] = q['why']
-for w in weeks:
+for w in units:
     if w['points']: items[w['key']] = f"{w['say']}，{w['title']}。" + '。'.join(w['points'])
 idx = json.load(open('audio/index.json')) if os.path.exists('audio/index.json') else {}
 async def main():

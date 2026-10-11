@@ -1,6 +1,6 @@
-// 每次改 concepts.json / quiz.json / weeks.json / index.html 都要把版本號 +1，手機才會拿到新內容
-const CACHE = 'exp-methods-review-v13';
-const FILES = ['./', 'index.html', 'concepts.json', 'quiz.json', 'weeks.json', 'manifest.json', 'icon-192.png', 'icon-512.png'];
+// 每次改 concepts.json / quiz.json / units.json / index.html 都要把版本號 +1，手機才會拿到新內容
+const CACHE = 'exp-methods-review-v14';
+const FILES = ['./', 'index.html', 'concepts.json', 'quiz.json', 'units.json', 'manifest.json', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));

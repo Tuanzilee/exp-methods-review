@@ -5,22 +5,23 @@ hai 的「心理學實驗法」每週複習 PWA（手機為主）。骨架仿 `g
 
 ## 檔案結構
 ```
-index.html     ← 全部 UI 與邏輯（首頁、每週重點、概念卡、情境題）
+index.html     ← 全部 UI 與邏輯（首頁、單元重點、概念卡、情境題）
 concepts.json  ← 概念卡
 quiz.json      ← 情境題（4 選 1，附解析）
-weeks.json     ← 每週重點摘要與待辦
+units.json     ← 單元（章節）重點摘要與待辦
 sw.js / manifest.json / icon-*.png
 tools/gen_audio.py ← 產生音檔（雲哲男聲 zh-TW-YunJheNeural，hai 選定）：`~/.venvs/tts/bin/python tools/gen_audio.py`
-audio/         ← {概念卡id}.mp3、{題目id}.mp3、W{週}.mp3（失敗時退回裝置語音）
+audio/         ← {概念卡id}.mp3、{題目id}.mp3、Ch{章}.mp3（失敗時退回裝置語音）
 check.py       ← 資料檢查（含音檔齊全）：python3 check.py
 ```
 預覽：`.claude/launch.json`（母資料夾）的 `exp-methods-review`，埠 8766。
 
-## 資料 schema
-- `concepts.json`：`id`（E_W{週}_C{兩位數}，不要改既有 id，進度綁 id）、`week`、`topic`、`term`、`en`、`def`、`example`、`tags`（含「期中」會進期中範圍）
-- `quiz.json`：`id`（E_W{週}_Q{兩位數}）、`week`、`q`、`options`（4 個）、`answer`（options 的索引）、`why`、`concept`（對應概念卡 id；答錯會把該概念加入錯題本）
-- 講義章節來源的卡片／題目：用 `ch`（章號）取代 `week`，id 為 `E_C{章}_C{兩位數}`／`E_C{章}_Q{兩位數}`；畫面標籤顯示 `Ch5`
-- `weeks.json`：`key`（W1／Ch5，音檔檔名）、`label`（畫面）、`say`（朗讀開頭）、`scope`（練習按鈕對應的範圍）、`date`、`title`、`summary`、`points[]`、`todo[]`、`concepts[]`；週次項目另有 `week`。W3 放假沒上課，保留一筆說明
+## 資料 schema（一律以「單元（章節）」分類，畫面只顯示 Ch1–Ch6）
+- `concepts.json`：`id`（不要改既有 id，進度綁 id；舊的 E_W1_C01 這類 id 只是歷史命名，不代表週次）、`ch`（章號，必填）、`week`（選填，上課週次，只做追溯、不顯示）、`topic`、`term`、`en`、`def`、`example`、`tags`
+- `quiz.json`：`id`、`ch`、`q`、`options`（4 個）、`answer`（options 的索引）、`why`、`concept`（對應概念卡 id；答錯會把該概念加入錯題本）
+- `units.json`：每章一筆：`ch`、`key`（Ch1…，音檔檔名）、`label`、`scope`（ch1…）、`say`（朗讀開頭）、`title`、`weeks`（顯示的對應上課週次或「講義」）、`summary`、`points[]`、`todo[]`、`concepts[]`
+- 新增內容：新卡片的 id 用 `E_C{章}_C{兩位數}`、題目 `E_C{章}_Q{兩位數}`
+- 歸屬原則：看這張卡在講義的哪一章；2026-10-12 hai 要求「以單元分」，把 W1/W2/W4 的卡依主題歸入 Ch1–Ch4
 
 ## 介面風格（2026-10-07，hai 參考一款學習 App 的截圖）
 暖米色底、深棕字、大圓角（20px）加淡邊框、無陰影；首頁只留一個主行動（今天要複習的卡數＋開始複習）；底部浮動膠囊導覽列＋線條圖示（不用彩色 emoji）；主按鈕有立體底邊。只借設計手法，不複製對方的圖示或文案。連勝／XP 暫不做。德文複習尚未套用。
@@ -28,15 +29,14 @@ check.py       ← 資料檢查（含音檔齊全）：python3 check.py
 ## 每週新增內容（hai 說「更新實驗法 W{n}」）
 1. 讀 `~/Desktop/P. 進行中專案/FJU psy/02_修課/1151/1151_心理學實驗法/` 當週的 `*_W{nn}_Plaud逐字稿.md`（Plaud 摘要區已分好知識點）與講義 PDF
 2. **Plaud 轉錄未經核聽**：專有名詞、數字以課本（Morling）與講義校正；不確定處列給 hai 確認
-3. 以「一張卡一個概念」追加 concepts.json；情境題用課堂案例改寫；更新 weeks.json
+3. 以「一張卡一個概念」追加 concepts.json；情境題用課堂案例改寫；更新 units.json
 4. **用自己的話改寫，不要貼講義或課本原文**（日後若公開 repo，需先檢查）
 5. 跑 `~/.venvs/tts/bin/python tools/gen_audio.py` 補音檔，再跑 `python3 check.py`；bump `sw.js` 的 `CACHE` 版本號
 6. 本機預覽驗證後 commit；**push 前一律先問 hai**（公開 repo，內容不放講義或課本原文）
 
 ## 待做
-- 講義 Ch1–Ch4 的缺口已補（2026-10-11，10 張卡，範圍按鈕「Ch1–4 補充」）
-- 講義 Ch7 還沒更新（期中範圍到 Ch7）；有課堂活動題（如 Ch5 p.149）PPT 沒給答案，不要替它編答案
-- 期中考範圍＝到 Ch7（hai 確認）。`SCOPES` 的「期中範圍」目前以 `week <= 7` 近似，等老師公布章節與週次對應後改成精確章節；`tags` 的「期中」已不再使用
+- 期中考範圍＝到 Ch7（hai 確認）；Ch7 講義還沒更新。範圍按鈕「期中範圍（至 Ch7）」目前以 `ch <= 7` 判斷
+- 有課堂活動題（如 Ch5 p.149）PPT 沒給答案，不要替它編答案
 
 ## 講義來源（2026-10-11）
 `心理學實驗法 Ch1–Ch6(1).pdf`（輔大黃揚名老師講義，文字很少、多為圖片，抽文字不夠，要轉圖看）。Ch5、Ch6 的卡片以 PPT 為主；PPT 沒寫定義的詞（尺規四種、雙盲等），只用教科書通用的標準說法，不自己加案例以外的主張。
