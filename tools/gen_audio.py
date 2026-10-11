@@ -9,7 +9,7 @@ items = {}
 for c in concepts: items[c['id']] = f"{c['term']}。{c['def']}。例如：{c['example']}"
 for q in quiz: items[q['id']] = q['why']
 for w in weeks:
-    if w['points']: items[f"W{w['week']}"] = f"第{w['week']}週，{w['title']}。" + '。'.join(w['points'])
+    if w['points']: items[w['key']] = f"{w['say']}，{w['title']}。" + '。'.join(w['points'])
 idx = json.load(open('audio/index.json')) if os.path.exists('audio/index.json') else {}
 async def main():
     n = 0

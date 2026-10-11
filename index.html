@@ -161,12 +161,15 @@ const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { c
 let CONCEPTS = [], QUIZ = [], WEEKS = [];
 const SCOPES = [
   { key: 'all', label: '全部', test: () => true },
-  { key: 'mid', label: '期中範圍（至 Ch7）', test: x => x.week <= 7 },
+  { key: 'mid', label: '期中範圍（至 Ch7）', test: x => x.week <= 7 || x.ch <= 7 },
   { key: 'w1', label: 'W1', test: x => x.week === 1 },
   { key: 'w2', label: 'W2', test: x => x.week === 2 },
   { key: 'w4', label: 'W4', test: x => x.week === 4 },
+  { key: 'ch5', label: 'Ch5 指標', test: x => x.ch === 5 },
+  { key: 'ch6', label: 'Ch6 調查', test: x => x.ch === 6 },
 ];
 const inScope = list => list.filter((SCOPES.find(s => s.key === prefs.scope) || SCOPES[0]).test);
+const src = x => x.ch ? `Ch${x.ch}` : `W${x.week}`;
 const isDue = c => !srs[c.id] || srs[c.id].due <= Date.now();
 const isNew = c => !srs[c.id];
 function markWeak(id) { const s = srs[id] || { box: 1, due: Date.now() }; s.weak = true; srs[id] = s; saveSrs(); }
@@ -221,18 +224,18 @@ function renderHome() {
 function renderWeeks() {
   app.innerHTML = WEEKS.slice().reverse().map(w => `
     <div class="card">
-      <div class="muted">W${w.week} · ${esc(w.date)}</div>
+      <div class="muted">${esc(w.label)} · ${esc(w.date)}</div>
       <h2 style="margin-top:2px">${esc(w.title)}</h2>
       <p>${esc(w.summary)}</p>
       ${w.points.length ? `<b>重點</b><ul class="pts">${w.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
       ${w.todo.length ? `<div style="margin-top:10px"><b>待辦</b><ul class="pts">${w.todo.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div>` : ''}
-      ${w.concepts.length ? `<button class="btn ghost" style="margin-top:12px" data-w="${w.week}">練這週的概念卡</button>` : ''}
-      ${w.points.length ? `<button class="spk" data-say="${w.week}" style="margin-top:10px" aria-label="朗讀">朗讀</button>` : ''}
+      ${w.concepts.length ? `<button class="btn ghost" style="margin-top:12px" data-w="${w.scope}">練這週的概念卡</button>` : ''}
+      ${w.points.length ? `<button class="spk" data-say="${w.key}" style="margin-top:10px" aria-label="朗讀">朗讀</button>` : ''}
     </div>`).join('');
-  document.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { prefs.scope = 'w' + b.dataset.w; savePrefs(); go('cards'); });
+  document.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { prefs.scope = b.dataset.w; savePrefs(); go('cards'); });
   document.querySelectorAll('[data-say]').forEach(b => b.onclick = () => {
-    const w = WEEKS.find(x => x.week === +b.dataset.say);
-    speak(`第${w.week}週，${w.title}。${w.points.join('。')}`, 'W' + w.week);
+    const w = WEEKS.find(x => x.key === b.dataset.say);
+    speak(`${w.say}，${w.title}。${w.points.join('。')}`, w.key);
   });
 }
 
@@ -264,9 +267,9 @@ function renderCard() {
     return;
   }
   const c = deck[idx];
-  const front = `<span class="tag">W${c.week} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div>
+  const front = `<span class="tag">${esc(src(c))} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div>
     <div class="hint">先想想它的意思，點卡片翻面</div>`;
-  const back = `<span class="tag">W${c.week} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div><div class="en">${esc(c.en)}</div>
+  const back = `<span class="tag">${esc(src(c))} · ${esc(c.topic)}</span><div class="term">${esc(c.term)}</div><div class="en">${esc(c.en)}</div>
     <div class="def">${esc(c.def)}</div><div class="example"><b>舉個例子：</b>${esc(c.example)}</div>`;
   app.innerHTML = `
     <div class="muted">${weakMode ? '錯題本' : '概念卡'} · ${idx + 1} / ${deck.length}</div>
@@ -317,7 +320,7 @@ function renderQuiz() {
   app.innerHTML = `
     <div class="muted">情境題 · ${qi + 1} / ${qz.length} · 答對 ${qScore}</div>
     <div class="progress"><div style="width:${qi / qz.length * 100}%"></div></div>
-    <div class="card"><span class="tag">W${q.week}</span><div class="prompt" style="margin-top:8px">${esc(q.q)}</div></div>
+    <div class="card"><span class="tag">${esc(src(q))}</span><div class="prompt" style="margin-top:8px">${esc(q.q)}</div></div>
     ${item.order.map((o, i) => `<button class="opt ${answered ? (o.ok ? 'right' : (item.pick === i ? 'wrong' : '')) : ''}" data-o="${i}">${esc(o.text)}</button>`).join('')}
     ${answered ? `<div class="why">${esc(q.why)}${c ? `<br><span class="muted">相關概念：${esc(c.term)}</span>` : ''}</div>
       <div class="row" style="margin-top:10px"><button class="spk" id="say" style="flex:none" aria-label="朗讀">朗讀</button><button class="btn" id="next">下一題</button></div>` : ''}`;
