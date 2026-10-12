@@ -35,7 +35,12 @@ check.py       ← 資料檢查（含音檔齊全）：python3 check.py
 6. 本機預覽驗證後 commit；**push 前一律先問 hai**（公開 repo，內容不放講義或課本原文）
 
 ## 待做
-- 【音檔待補】2026-10-12 edge-tts 回 403（套件已是最新版 7.2.8，疑為微軟端限制）。W5 更新新增的卡片、題目與有修改的 5 張卡（E_C5_C02／C09／C11／C12／C13）、Ch3／Ch5／Ch6 單元重點，暫無預錄音檔，App 會退回裝置語音。服務恢復後執行 `tools/gen_audio.py` 補齊並問 hai 後 push。不要自己換別的付費語音服務
+- 【音檔補法（2026-10-12）】edge-tts 回 403（套件最新版 7.2.8，疑為微軟端限制）。hai 有 TTSMaker **Lite** 方案（約 $9.99/月，30 萬字/月、單次 1 萬字、商用 OK；**Lite 沒有 API**，Pro Mini 以上才有）。改用半自動流程：
+  1. `python3 tools/make_tts_batch.py` → 產生 `tts_batch/batch.txt`（只含缺音檔的項目，中間插 `((⏱️=3000))` 停頓）與 `order.json`
+  2. hai 到 ttsmaker.com 登入，貼入 batch.txt、選台灣中文男聲，轉換並下載 mp3 丟回專案資料夾
+  3. `python3 tools/split_batch.py <mp3>`：依 ≥2.5 秒停頓切回單檔（需 ffmpeg，已用 Homebrew 安裝），段數不符就不寫入
+  4. 抽聽、`python3 check.py`，問 hai 後 push
+  聲音混用：舊的雲哲（edge-tts）音檔保留，缺的用 TTSMaker 男聲補。不要自己換別的付費語音服務
 - 期中考範圍＝到 Ch7（hai 確認）；Ch7 講義還沒更新。範圍按鈕「期中範圍（至 Ch7）」目前以 `ch <= 7` 判斷
 - 有課堂活動題（如 Ch5 p.149）PPT 沒給答案，不要替它編答案
 
