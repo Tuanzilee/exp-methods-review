@@ -1,9 +1,10 @@
 """把 TTSMaker 轉出的長音檔，依 3 秒停頓切回單一音檔。
-用法：python3 tools/split_batch.py <下載的 mp3 路徑>
+用法：python3 tools/split_batch.py <下載的 mp3 路徑> [--first N]
 會檢查切出的段數＝order.json 的項目數，不符就不寫入任何檔案。"""
 import hashlib, json, re, subprocess, sys, os
 src = sys.argv[1]
 order = json.load(open('tts_batch/order.json'))
+if len(sys.argv) > 3 and sys.argv[2] == '--first': order = order[:int(sys.argv[3])]  # 只切前 N 項（音檔只涵蓋前 N 項時用）
 VOICE = 'zh-TW-YunJheNeural'  # 讓 gen_audio.py 不要把這些檔案當成需要重錄
 out = subprocess.run(['ffmpeg', '-i', src, '-af', 'silencedetect=noise=-40dB:d=2.0', '-f', 'null', '-'], capture_output=True, text=True).stderr
 starts = [float(x) for x in re.findall(r'silence_start: ([\d.]+)', out)]
